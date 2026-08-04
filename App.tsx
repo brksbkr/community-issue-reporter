@@ -1,20 +1,56 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import HomeScreen from './src/screens/HomeScreen';
+import SubmitReportScreen from './src/screens/SubmitReportScreen';
+import ReportMapScreen from './src/screens/ReportMapScreen';
+import ReportsScreen from './src/screens/ReportsScreen';
+import { RootStackParamList } from './src/navigationTypes';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <StatusBar style="light" />
+
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#245c45',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Community Issue Reporter' }}
+        />
+
+        <Stack.Screen
+          name="SubmitReport"
+          component={SubmitReportScreen}
+          options={{ title: 'Submit a Report' }}
+        />
+
+        <Stack.Screen
+          name="ReportMap"
+          component={ReportMapScreen}
+          options={{ title: 'Issue Map' }}
+        />
+
+        <Stack.Screen
+          name="Reports"
+          component={ReportsScreen}
+          options={{ title: 'Submitted Reports' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

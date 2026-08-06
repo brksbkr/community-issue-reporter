@@ -11,6 +11,12 @@ export type ReportInput = {
   longitude: number;
 };
 
+export type Report = ReportInput & {
+  id: string;
+  status: string;
+  createdAt: string;
+};
+
 export async function createReport(report: ReportInput): Promise<string> {
   const response = await axios.post<{ name: string }>(
     `${DATABASE_URL}/reports.json`,
@@ -22,4 +28,25 @@ export async function createReport(report: ReportInput): Promise<string> {
   );
 
   return response.data.name;
+}
+
+export async function getReports(): Promise<Report[]> {
+  const response = await axios.get<
+    Record<string, Omit<Report, 'id'>> | null
+  >(`${DATABASE_URL}/reports.json`);
+
+  if (!response.data) {
+    return [];
+  }
+
+  return Object.entries(response.data)
+    .map(([id, report]) => ({
+      id,
+      ...report,
+    }))
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() -
+        new Date(a.createdAt).getTime()
+    );
 }

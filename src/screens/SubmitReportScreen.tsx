@@ -8,7 +8,12 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import MapView, { MapPressEvent, Marker } from 'react-native-maps';
+
+import MapView, {
+  MapPressEvent,
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
 
 import { createReport } from '../services/firebaseApi';
 import { COLORS } from '../theme';

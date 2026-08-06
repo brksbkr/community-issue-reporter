@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 
+import { createReport } from '../services/firebaseApi';
+
 type Coordinate = {
   latitude: number;
   longitude: number;
@@ -20,12 +22,13 @@ export default function SubmitReportScreen() {
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState<Coordinate | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleMapPress = (event: MapPressEvent) => {
     setLocation(event.nativeEvent.coordinate);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (
       !title.trim() ||
       !category.trim() ||
@@ -39,10 +42,36 @@ export default function SubmitReportScreen() {
       return;
     }
 
-    Alert.alert(
-      'Report ready',
-      'The form and map are working. Firebase storage will be connected next.'
-    );
+    try {
+      setIsSubmitting(true);
+
+      await createReport({
+        title: title.trim(),
+        category: category.trim(),
+        description: description.trim(),
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
+
+      setTitle('');
+      setCategory('');
+      setDescription('');
+      setLocation(null);
+
+      Alert.alert(
+        'Report submitted',
+        'The community issue was saved successfully.'
+      );
+    } catch (error) {
+      console.error('Firebase submission error:', error);
+
+      Alert.alert(
+        'Submission failed',
+        'The report could not be saved. Check the Firebase database rules and try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -108,9 +137,10 @@ export default function SubmitReportScreen() {
 
       <View style={styles.buttonContainer}>
         <Button
-          title="Submit Report"
+          title={isSubmitting ? 'Submitting...' : 'Submit Report'}
           color="#245c45"
           onPress={handleSubmit}
+          disabled={isSubmitting}
         />
       </View>
     </ScrollView>

@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-
+import { COLORS } from '../theme';
 export default function ReportsScreen() {
   return (
     <ScrollView
@@ -27,7 +27,7 @@ export default function ReportsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f7f5',
+    backgroundColor: COLORS.background,
   },
   content: {
     padding: 18,
@@ -35,35 +35,36 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#183c2d',
+    color: COLORS.text,
     marginBottom: 18,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.surface,
     borderRadius: 10,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#d4ddd8',
+    borderColor: COLORS.border,
   },
   title: {
     fontSize: 19,
     fontWeight: 'bold',
-    color: '#183c2d',
+    color: COLORS.text,
     marginBottom: 8,
   },
   detail: {
     fontSize: 15,
     marginBottom: 4,
-    color: '#46534d',
+    color: COLORS.muted,
   },
   description: {
     marginTop: 8,
     fontSize: 15,
     lineHeight: 21,
+    color: COLORS.text,
   },
   note: {
     marginTop: 20,
-    color: '#64716a',
+    color: COLORS.muted,
     textAlign: 'center',
   },
 });

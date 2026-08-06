@@ -1,6 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
+import { COLORS } from '../theme';
+
 export default function ReportMapScreen() {
   return (
     <View style={styles.container}>
@@ -29,9 +31,10 @@ export default function ReportMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
   map: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
+    backgroundColor: COLORS.surface,
   },
 });

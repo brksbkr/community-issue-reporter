@@ -8,28 +8,32 @@ import {
 } from 'react-native';
 
 import { RootStackParamList } from '../navigationTypes';
+import { COLORS } from '../theme';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../../assets/icon.png')}
-        style={styles.image}
-      />
+      <View style={styles.hero}>
+        <Image
+          source={require('../../assets/community-icon.png')}
+          style={styles.image}
+          resizeMode="contain"
+        />
 
-      <Text style={styles.title}>Community Issue Reporter</Text>
+        <Text style={styles.title}>Community Issue Reporter</Text>
 
-      <Text style={styles.description}>
-        Report potholes, damaged signs, broken streetlights, trash,
-        drainage problems, and other community issues.
-      </Text>
+        <Text style={styles.description}>
+          Report potholes, damaged signs, broken streetlights, trash,
+          drainage problems, and other community issues.
+        </Text>
+      </View>
 
       <View style={styles.buttonContainer}>
         <Button
           title="Submit a Report"
-          color="#245c45"
+          color={COLORS.accent}
           onPress={() => navigation.navigate('SubmitReport')}
         />
       </View>
@@ -37,7 +41,7 @@ export default function HomeScreen({ navigation }: Props) {
       <View style={styles.buttonContainer}>
         <Button
           title="View Issue Map"
-          color="#245c45"
+          color={COLORS.accent}
           onPress={() => navigation.navigate('ReportMap')}
         />
       </View>
@@ -45,7 +49,7 @@ export default function HomeScreen({ navigation }: Props) {
       <View style={styles.buttonContainer}>
         <Button
           title="View Reports"
-          color="#245c45"
+          color={COLORS.accent}
           onPress={() => navigation.navigate('Reports')}
         />
       </View>
@@ -56,30 +60,36 @@ export default function HomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f7f5',
-    padding: 24,
+    backgroundColor: COLORS.background,
+    padding: 22,
     justifyContent: 'center',
   },
+  hero: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 14,
+    padding: 24,
+    marginBottom: 26,
+  },
   image: {
-    width: 110,
-    height: 110,
+    width: 120,
+    height: 120,
     alignSelf: 'center',
-    marginBottom: 24,
-    borderRadius: 20,
+    marginBottom: 20,
   },
   title: {
     fontSize: 27,
     fontWeight: 'bold',
-    color: '#183c2d',
+    color: COLORS.text,
     textAlign: 'center',
     marginBottom: 14,
   },
   description: {
     fontSize: 16,
     lineHeight: 23,
-    color: '#46534d',
+    color: COLORS.muted,
     textAlign: 'center',
-    marginBottom: 30,
   },
   buttonContainer: {
     marginBottom: 14,

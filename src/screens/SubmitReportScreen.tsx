@@ -11,6 +11,7 @@ import {
 import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 
 import { createReport } from '../services/firebaseApi';
+import { COLORS } from '../theme';
 
 type Coordinate = {
   latitude: number;
@@ -87,6 +88,8 @@ export default function SubmitReportScreen() {
         value={title}
         onChangeText={setTitle}
         placeholder="Example: Pothole on Main Street"
+        placeholderTextColor={COLORS.muted}
+        keyboardAppearance="dark"
       />
 
       <Text style={styles.label}>Category</Text>
@@ -96,6 +99,8 @@ export default function SubmitReportScreen() {
         value={category}
         onChangeText={setCategory}
         placeholder="Road, streetlight, trash, drainage..."
+        placeholderTextColor={COLORS.muted}
+        keyboardAppearance="dark"
       />
 
       <Text style={styles.label}>Description</Text>
@@ -105,6 +110,8 @@ export default function SubmitReportScreen() {
         value={description}
         onChangeText={setDescription}
         placeholder="Describe the issue"
+        placeholderTextColor={COLORS.muted}
+        keyboardAppearance="dark"
         multiline
         textAlignVertical="top"
       />
@@ -115,30 +122,37 @@ export default function SubmitReportScreen() {
         Press the map to place the report marker.
       </Text>
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 36.0609,
-          longitude: -95.7975,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-        onPress={handleMapPress}
-      >
-        {location && <Marker coordinate={location} />}
-      </MapView>
+      <View style={styles.mapContainer}>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 36.0609,
+            longitude: -95.7975,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
+          }}
+          onPress={handleMapPress}
+        >
+          {location && <Marker coordinate={location} />}
+        </MapView>
+      </View>
 
       {location && (
         <View style={styles.coordinateBox}>
-          <Text>Latitude: {location.latitude.toFixed(5)}</Text>
-          <Text>Longitude: {location.longitude.toFixed(5)}</Text>
+          <Text style={styles.coordinateText}>
+            Latitude: {location.latitude.toFixed(5)}
+          </Text>
+
+          <Text style={styles.coordinateText}>
+            Longitude: {location.longitude.toFixed(5)}
+          </Text>
         </View>
       )}
 
       <View style={styles.buttonContainer}>
         <Button
           title={isSubmitting ? 'Submitting...' : 'Submit Report'}
-          color="#245c45"
+          color={COLORS.accent}
           onPress={handleSubmit}
           disabled={isSubmitting}
         />
@@ -150,7 +164,7 @@ export default function SubmitReportScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f7f5',
+    backgroundColor: COLORS.background,
   },
   content: {
     padding: 18,
@@ -159,13 +173,14 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#183c2d',
+    color: COLORS.text,
     marginBottom: 6,
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
-    borderColor: '#b9c5bf',
+    borderColor: COLORS.border,
+    color: COLORS.text,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 11,
@@ -176,18 +191,31 @@ const styles = StyleSheet.create({
     minHeight: 100,
   },
   instructions: {
-    color: '#56625c',
+    color: COLORS.muted,
     marginBottom: 10,
   },
-  map: {
+  mapContainer: {
     height: 270,
+    overflow: 'hidden',
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.surface,
+  },
+  map: {
+    flex: 1,
   },
   coordinateBox: {
-    backgroundColor: '#e3ece7',
+    backgroundColor: COLORS.surfaceAlt,
+    borderWidth: 1,
+    borderColor: COLORS.border,
     padding: 12,
     borderRadius: 8,
     marginTop: 12,
+  },
+  coordinateText: {
+    color: COLORS.text,
+    marginBottom: 3,
   },
   buttonContainer: {
     marginTop: 22,

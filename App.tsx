@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
@@ -7,11 +8,16 @@ import SubmitReportScreen from './src/screens/SubmitReportScreen';
 import ReportMapScreen from './src/screens/ReportMapScreen';
 import ReportsScreen from './src/screens/ReportsScreen';
 import { RootStackParamList } from './src/navigationTypes';
+import { setupNotifications } from './src/services/notifications';
 import { COLORS, navigationTheme } from './src/theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  useEffect(() => {
+    setupNotifications();
+  }, []);
+
   return (
     <NavigationContainer theme={navigationTheme}>
       <StatusBar style="light" />

@@ -6,7 +6,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
 
 import { getReports, Report } from '../services/firebaseApi';
 import { COLORS } from '../theme';
@@ -26,25 +29,39 @@ export default function ReportMapScreen() {
       const savedReports = await getReports();
       setReports(savedReports);
 
-      if (savedReports.length > 0) {
-        setTimeout(() => {
-          mapRef.current?.fitToCoordinates(
-            savedReports.map((report) => ({
-              latitude: report.latitude,
-              longitude: report.longitude,
-            })),
-            {
-              edgePadding: {
-                top: 80,
-                right: 80,
-                bottom: 80,
-                left: 80,
-              },
-              animated: true,
-            }
-          );
-        }, 500);
+if (savedReports.length === 1) {
+  const report = savedReports[0];
+
+  setTimeout(() => {
+    mapRef.current?.animateToRegion(
+      {
+        latitude: report.latitude,
+        longitude: report.longitude,
+        latitudeDelta: 0.03,
+        longitudeDelta: 0.03,
+      },
+      500
+    );
+  }, 500);
+} else if (savedReports.length > 1) {
+  setTimeout(() => {
+    mapRef.current?.fitToCoordinates(
+      savedReports.map((report) => ({
+        latitude: report.latitude,
+        longitude: report.longitude,
+      })),
+      {
+        edgePadding: {
+          top: 80,
+          right: 80,
+          bottom: 80,
+          left: 80,
+        },
+        animated: true,
       }
+    );
+  }, 500);
+}
     } catch (error) {
       console.error('Firebase map loading error:', error);
       setErrorMessage('The report locations could not be loaded.');

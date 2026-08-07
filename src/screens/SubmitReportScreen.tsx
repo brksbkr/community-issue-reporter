@@ -16,6 +16,7 @@ import MapView, {
 } from 'react-native-maps';
 
 import { createReport } from '../services/firebaseApi';
+import { sendReportNotification } from '../services/notifications';
 import { COLORS } from '../theme';
 
 type Coordinate = {
@@ -59,17 +60,14 @@ export default function SubmitReportScreen() {
         longitude: location.longitude,
       });
 
+      await sendReportNotification();
+
       setTitle('');
       setCategory('');
       setDescription('');
       setLocation(null);
-
-      Alert.alert(
-        'Report submitted',
-        'The community issue was saved successfully.'
-      );
     } catch (error) {
-      console.error('Firebase submission error:', error);
+      console.error('Report submission error:', error);
 
       Alert.alert(
         'Submission failed',
@@ -129,6 +127,7 @@ export default function SubmitReportScreen() {
 
       <View style={styles.mapContainer}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude: 36.0609,

@@ -36,7 +36,15 @@ export async function sendReportNotification() {
       title: 'Report Submitted',
       body: 'Your community issue was submitted successfully.',
       sound: true,
+      priority: Notifications.AndroidNotificationPriority.MAX,
     },
-    trigger: null,
+    trigger:
+      Platform.OS === 'android'
+        ? {
+            type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+            seconds: 1,
+            channelId: 'reports',
+          }
+        : null,
   });
 }

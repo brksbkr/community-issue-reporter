@@ -39,25 +39,33 @@ Users can enter issue information, select a location on Google Maps, save report
 
 ## Screenshots
 Home Screen
+
 <img src="assets/screenshots/home_screen.png" width="300">
 
 Submit Report
+
 <img src="assets/screenshots/submit_report.png" width="300">
 
 Test Report
+
 <img src="assets/screenshots/test_report.png" width="300">
 
 Submission Notification
+
 <img src="assets/screenshots/submit_notification.png" width="300">
 
 Submitted Reports
+
 <img src="assets/screenshots/submitted_reports.png" width="300">
 
 Issue Map
+
 <img src="assets/screenshots/issue_map.png" width="300">
 
 Splash Screen
+
 <img src="assets/screenshots/splash_screen.png" width="300">
 
 Application Icon
+
 <img src="assets/screenshots/app_on_mobile.png" width="300">
